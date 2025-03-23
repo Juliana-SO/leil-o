@@ -98,5 +98,29 @@ public class ProdutosDAO {
         }
 
     }
+    public List<ProdutosDTO> listarProdutosVendidos() {
+        conn = new conectaDAO().connectDB();
+        String sql = "SELECT * FROM produtos WHERE status LIKE ?";
+        try {
+            PreparedStatement stmt = this.conn.prepareStatement(sql);
+            stmt.setString(1, "%" +"Vendido"+ "%");
+            ResultSet rs = stmt.executeQuery();
+            List<ProdutosDTO> listaP = new ArrayList<>();
+
+            while (rs.next()) {
+                ProdutosDTO p = new ProdutosDTO();
+                p.setId(rs.getInt("id"));
+                p.setNome(rs.getString("nome"));
+                p.setValor(rs.getInt("valor"));
+                p.setStatus(rs.getString("status"));
+                listaP.add(p);
+            }
+
+            return listaP;
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
 
 }
