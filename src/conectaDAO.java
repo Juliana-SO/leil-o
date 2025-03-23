@@ -20,21 +20,21 @@ import javax.swing.JOptionPane;
  */
 public class conectaDAO {
     
-    public Connection connectDB(){
-         
+    private static final String URL = "jdbc:mysql://localhost:3306/produtos?useSSL=false"; 
+    private static final String USER = "root";
+    private static final String PASSWORD = "@Juli4321";
+
+    public Connection connectDB() {
+        Connection conn = null;
+
         try {
-        
-            Connection conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost/produtos",  
-                    "root",  
-                    "@Juli4321"); 
-        return conn;
-            
-        } catch (SQLException erro){
-            JOptionPane.showMessageDialog(null, "Erro ConectaDAO" + erro.getMessage());
-            return null;
+            conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            System.out.println("Conexão bem-sucedida!");
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco: " + erro.getMessage());
         }
-         
+
+        return conn;
     }
     
 }
